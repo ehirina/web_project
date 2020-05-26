@@ -15,14 +15,17 @@ class CreateTimeEntryTable extends Migration
     {
         Schema::create('time_entry', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigIncrements('id_project');
-            $table->foreign('id_project')->referenced('id')->on('projects')->onDelete('cascade');;
-            $table->bigIncrements('id_user');
-            $table->foreign('id_user')->referenced('id')->on('users');
+            $table->bigInteger('id_project')->unsigned();
+            $table->bigInteger('id_user')->unsigned();
             $table->string('note', 500);
             $table->decimal('ore', 2, 2);
             $table->timestamps();
         });
+
+        Schema::table('time_entry', function (Blueprint $table)  {
+            $table->foreign('id_project')->references('id')->on('projects')->onDelete('CASCADE');
+            $table->foreign('id_user')->references('id')->on('users');
+    });
     }
 
     /**

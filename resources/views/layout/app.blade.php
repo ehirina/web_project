@@ -35,6 +35,30 @@
                 </li>
                 </ul>
             </div>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ URL::action('ClientController@index') }}">Clients</a>
+                </li>
+                </ul>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ URL::action('ClientController@index') }}">Team</a>
+                </li>
+                </ul>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ URL::action('ClientController@index') }}">Reports</a>
+                </li>
+                </ul>
+            </div>
         </nav>
 
         <div class="container">            

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Validator;
+
+use App\Project;
+use App\Client;
 
 class ProjectController extends Controller
 {
@@ -13,7 +17,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return view('projects');
+        $projects = Project::all();
+
+        return view('projects.index', compact('projects'));
     }
 
     /**
@@ -23,7 +29,10 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('projects.create');
+        $clients = Client::all();
+
+        return view('projects.create', compact('clients'));
+
     }
 
     /**
@@ -34,26 +43,31 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
-        // $input = $request->all();
+        $input = $request->all();
 
-        // $validator = Validator::make($input, [
-        //     'name'          => 'required|max100',
-        //     'description'   => 'required|max:255',
-        //     'date_start'    => 'required|date',
-        //     'date_end'      => 'required|date',
-        //     'id_cliente'    => 'required|exists:categories,id',
-        // ]);
+        $validator = Validator::make($input, [
+            'name'          => 'required|max:100',
+            'description'   => 'required|max:255',
+            'date_start'    => 'required|date|after:yesterday',
+            'date_end'      => 'required|date|after:date_start',
+            'id_cliente'    => 'required|exists:clients,id',
+        ]);
 
-        // if ($validator->fails()) {
-        //     return redirect('expense/create')
-        //         ->withErrors($validator)
-        //         ->withInput();
+        if ($validator->fails()) {
+            return redirect('projects/create')
+                ->withErrors($validator)
+                ->withInput();
         }
 
-        //Expense::create($input);
-        
-        //return redirect('/');
+        $project = new Project;
+        $project->name = $request->input('name');
+        $project->description = $request->input('description');
+        $project->date_start = $request->input('date_start');
+        $project->date_end = $request->input('date_end');
+        $project->id_cliente = $request->input('id_cliente');
+        $project->save();
+
+        return redirect('/');
     }
 
     /**
@@ -62,10 +76,12 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function show($id)
-    // {
-    //     //
-    // }
+    public function show($id)
+    {
+        $elemento = Project::find($id);
+        
+        return view('projects.show', compact('elemento'));
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -100,4 +116,4 @@ class ProjectController extends Controller
 //     {
 //         //
 //     }
-// }
+}
