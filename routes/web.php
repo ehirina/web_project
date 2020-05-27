@@ -28,3 +28,6 @@ Route::resource('clients', 'ClientController');
 Route::resource('projects', 'ProjectController');
 
 //Route::get('/clients/create', 'ClientController@create');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
