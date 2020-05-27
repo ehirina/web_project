@@ -15,17 +15,16 @@
                 </div>
             @endif
 
-            {!! Form::open(['action' => 'TimeEntryController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+            {!! Form::open(['action' => 'UserController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 
-               <div class="form-group">
-                    {{Form::label('id_project', 'Project')}}
-                    
-                    <select class="form-control" name="id_project">
-                        @foreach ($projects as $project)
-                        <option value="{{ $project->id }}">{{ $project->name }}</option>
-                        @endforeach
-                    </select>
-                </div>  
+                 <div class="form-group">
+                    {{Form::label('nome', 'Nome referente')}}
+                    {{Form::text('nome_referente', '', ['class' => 'form-control'])}}
+                </div>
+                <div class="form-group">
+                    {{Form::label('cognome_referente', 'Cognome referente')}}
+                    {{Form::text('cognome_referente', '', ['class' => 'form-control' ])}}
+                </div>
 
 
                 <div class="form-group">

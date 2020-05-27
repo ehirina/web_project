@@ -23,7 +23,7 @@
     </head>
     <body>        
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Blackbeard</a>
+            <a class="navbar-brand" href="#">DreamTeam</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -47,7 +47,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ URL::action('ClientController@index') }}">Team</a>
+                    <a class="nav-link" href="{{ URL::action('User@index') }}">Team</a>
                 </li>
                 </ul>
             </div>
@@ -55,7 +55,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ URL::action('ClientController@index') }}">Reports</a>
+                    <a class="nav-link" href="{{ URL::action('TimeEntryController@index') }}">Reports</a>
                 </li>
                 </ul>
             </div>
