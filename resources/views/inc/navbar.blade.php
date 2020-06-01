@@ -16,10 +16,10 @@
         <a class="nav-link" href="/clients">Clients</a>
       </li>
        <li class="nav-item">
-        <a class="nav-link" href="/clients">Team</a>
+        <a class="nav-link" href="/users">Team</a>
       </li>
        <li class="nav-item">
-        <a class="nav-link" href="/clients">Reports</a>
+        <a class="nav-link" href="/reports">Reports</a>
       </li>
     </ul>
     </div>
@@ -32,10 +32,10 @@
                 @else
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"  aria-haspopup="true" aria-expanded="false">
-                            {{ Auth::user()->name }} <span class="caret"></span>
+                            Hey, {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a class="dropdown-item" href="/Home">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="/home">Dashboard</a></li>
                             <li>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();

@@ -15,20 +15,22 @@
                 </div>
             @endif
 
-            {!! Form::open(['action' => 'UserController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+            {!! Form::open(['action' => ['UserController@update', '$user->id'], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                {{method_field('PUT')}}
                 {{csrf_field()}}
                  <div class="form-group">
                     {{Form::label('name', 'Nome')}}
-                    {{Form::text('name', '', ['class' => 'form-control'])}}
+                    {{Form::text('name', $user->name, ['class' => 'form-control'])}}
                 </div>
 
                 <div class="form-group">
                      {{Form::label('email', 'Email')}}
-                    {{Form::email('email', '', ['class' => 'form-control', 'placeholder' => 'example@address.com'])}}
+                    {{Form::email('email', $user->email, ['class' => 'form-control', 'placeholder' => 'example@address.com'])}}
                 </div>
 
                 <div class="form-group">
-                    {{Form::label('password', 'Password')}}
+                      {{ Form::radio('result', 'Do not change password' , true) }}
+                        {{ Form::radio('result', 'Change password with' , false) }}
                     {{Form::password('password')}}
                 </div>
 
@@ -38,6 +40,7 @@
                     {{Form::checkbox('admin', '' )}}
                 </div>
 
+        {{Form::hidden('_method','PUT')}}
          {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
         {!! Form::close() !!}
         </div>

@@ -26,6 +26,13 @@ Route::resource('clients', 'ClientController');
 //Route::post('/clients',                 'ClientController@store');
 
 Route::resource('projects', 'ProjectController');
+Route::resource('reports', 'TimeEntryController');
+
+Route::resource('users', 'UserController');
+
+
+Route::resource('assignments', 'AssignmentController');
+
 
 //Route::get('/clients/create', 'ClientController@create');
 Auth::routes();

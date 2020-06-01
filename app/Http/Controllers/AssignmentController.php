@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Project;
 
-class TimeEntryController extends Controller
+use App\Project;
+use App\User;
+
+class AssignmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +16,9 @@ class TimeEntryController extends Controller
      */
     public function index()
     {
-        return view('reports.index');
+        $users = User::all();
+        $projects = Project::all();
+        return view('assignments.create', compact('projects','users'));
     }
 
     /**
@@ -24,9 +28,9 @@ class TimeEntryController extends Controller
      */
     public function create()
     {
+        $users = User::all();
         $projects = Project::all();
-
-        return view('reports.create', compact('projects'));
+        return view('assignments.create', compact('projects','users'));
     }
 
     /**
@@ -37,7 +41,7 @@ class TimeEntryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect('/');
     }
 
     /**
