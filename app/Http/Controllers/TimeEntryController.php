@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Validator;
+use App\Project;
 
 class TimeEntryController extends Controller
 {
@@ -13,7 +15,7 @@ class TimeEntryController extends Controller
      */
     public function index()
     {
-        //
+        return view('reports.index');
     }
 
     /**
@@ -25,7 +27,7 @@ class TimeEntryController extends Controller
     {
         $projects = Project::all();
 
-        return view('projects.create', compact('projects'));
+        return view('reports.create', compact('projects'));
     }
 
     /**

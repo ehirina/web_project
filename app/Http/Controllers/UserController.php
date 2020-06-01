@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Validator;
+
+use App\Project;
+use App\User;
+use App\Role;
 
 class UserController extends Controller
 {
@@ -13,7 +19,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::orderBy('id', 'desc')->paginate(10);
+        return view('users.index')->withUsers($users);
     }
 
     /**
@@ -23,7 +30,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::all();
+        return view('users.create')->withRoles($roles);;
     }
 
     /**
@@ -34,7 +42,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $this->validate($request, [
+        'name' => 'required|max:255',
+        'email' => 'required|email|unique:users'
+      ]);
+
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+
+        $user->save();
+
+      if ($request->role) {
+        $user->syncRoles(explode(',', $request->role));
+      }
+
     }
 
     /**
@@ -45,31 +69,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view("users.show")->withUser($user);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -79,6 +82,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $elemento = User::find($id);
+        $elemento->delete();
     }
 }

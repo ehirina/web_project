@@ -10,16 +10,10 @@
         <a class="nav-link" href="/home">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/projects">Projects</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/clients">Clients</a>
+        <a class="nav-link" href="/projects"> My Projects</a>
       </li>
        <li class="nav-item">
-        <a class="nav-link" href="/users">Team</a>
-      </li>
-       <li class="nav-item">
-        <a class="nav-link" href="/reports">Reports</a>
+        <a class="nav-link" href="/reports"> My Reports</a>
       </li>
     </ul>
     </div>

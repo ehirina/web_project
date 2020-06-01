@@ -20,7 +20,7 @@ class CreateAssignmentsTable extends Migration
             $table->decimal('internal_rate', 5, 2);
             $table->decimal('external_rate', 5, 2);
             $table->date('date_start');
-            $table->date('date_end');
+            $table->date('date_end')->nullable();;
             $table->timestamps();
         });
 

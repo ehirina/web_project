@@ -35,7 +35,7 @@
 
 
                 <div class="form-group">
-                    {{Form::label('ore', 'Time spent')}}
+                    {{Form::label('ore', 'Time spent (hours)')}}
                     {{Form::number('ore', '', ['class' => 'form-control', ])}}
                 </div>       
          {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}

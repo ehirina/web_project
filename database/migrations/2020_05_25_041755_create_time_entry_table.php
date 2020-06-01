@@ -17,8 +17,9 @@ class CreateTimeEntryTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('id_project')->unsigned();
             $table->bigInteger('id_user')->unsigned();
-            $table->string('note', 500);
+            $table->string('note', 500)->nullable();;
             $table->decimal('ore', 2, 2);
+            $table->date('date');
             $table->timestamps();
         });
 

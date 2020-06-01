@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
 use App\Project;
+use Auth;
 use App\Client;
 
 class ProjectController extends Controller
@@ -17,8 +19,17 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        if (Auth::user()->hasRole('administrator')){
+            $projects = Project::all();
+    }
+        else {
+            $user_id = Auth::id();
+            $projects = DB::table('projects')
+                        ->select('projects.name as name', 'projects.id as id', 'projects.description as description')
+                        ->join('assignments', 'projects.id', '=', 'assignments.id_project')
+                        ->where('assignments.id_user', '=', $user_id)->get();
 
+        }
         return view('projects.index', compact('projects'));
     }
 
@@ -47,9 +58,9 @@ class ProjectController extends Controller
 
         $validator = Validator::make($input, [
             'name'          => 'required|max:100',
-            'description'   => 'required|max:255',
-            'date_start'    => 'required|date|after:yesterday',
-            'date_end'      => 'required|date|after:date_start',
+            'description'   => 'max:255',
+            'date_start'    => 'date|after:yesterday',
+            'date_end'      => 'date|after:date_start|nullable',
             'id_cliente'    => 'required|exists:clients,id',
         ]);
 
@@ -84,17 +95,6 @@ class ProjectController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    // public function edit($id)
-    // {
-    //     //
-    // }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -112,8 +112,9 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-//     public function destroy($id)
-//     {
-//         //
-//     }
+    public function destroy($id)
+    {
+        $elemento = Project::find($id);
+        $elemento->delete();
+    }
 }
