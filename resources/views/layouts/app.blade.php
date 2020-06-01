@@ -25,7 +25,13 @@
 <body>
     <div id="app">
 
-        @include('inc.navbar')
+        @auth
+        @if (Auth::user()->hasRole('administrator'))
+            @include('inc.navbar')
+        @else
+            @include('inc.usernav')
+         @endif
+         @endauth
         <div class="container">
             @yield('content')
         </div>

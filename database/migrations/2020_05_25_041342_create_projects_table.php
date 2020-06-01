@@ -19,7 +19,7 @@ class CreateProjectsTable extends Migration
             $table->text('description');
             $table->bigInteger('id_cliente')->unsigned();
             $table->date('date_start');
-            $table->date('date_end');
+            $table->date('date_end')->nullable();
             $table->timestamps();
         });
 

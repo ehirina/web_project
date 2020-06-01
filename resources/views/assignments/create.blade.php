@@ -30,7 +30,7 @@
                 <div class="form-group">
                     {{Form::label('id_user', 'Employee')}}
                     
-                    <select class="form-control" name="id_project">
+                    <select class="form-control" name="id_user">
                         @foreach ($users as $user)
                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                         @endforeach
@@ -45,6 +45,15 @@
                    <div class="form-group">
                     {{Form::label('external_rate', 'External rate')}}
                     {{Form::number('external_rate', '', ['class' => 'form-control', 'step' => '0.5' ])}}
+                </div> 
+
+                    <div class="form-group">
+                     {{Form::label('date_start', 'Start')}}
+                    {{Form::date('date_start', '', ['class' => 'form-control'])}}
+                </div>
+                <div class="form-group">
+                     {{Form::label('date_end', 'End')}}
+                    {{Form::date('date_end', '', ['class' => 'form-control'])}}
                 </div> 
 
 

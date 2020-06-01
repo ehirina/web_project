@@ -29,14 +29,19 @@
 
                 <div class="form-group">
                     {{Form::label('password', 'Password')}}
-                    {{Form::password('password')}}
+                    {{Form::password('password', ['class' => 'form-control'])}}
                 </div>
 
                 
                 <div class="form-group">
-                    {{Form::label('admin', 'Admin')}}
-                    {{Form::checkbox('admin', '' )}}
-                </div>
+                {{Form::label('role', 'Role')}}
+                    
+                    <select class="form-control" name="id_cliente">
+                        @foreach ($roles as $role)
+                        <option value="{{ $role->id }}">{{ $role->display_name }}</option>
+                        @endforeach
+                    </select>
+                </div>  
 
          {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
         {!! Form::close() !!}

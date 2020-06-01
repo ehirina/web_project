@@ -19,7 +19,7 @@ class CreateClientsTable extends Migration
             $table->string('nome_referente', 50);
             $table->string('cognome_referente', 50);
             $table->string('email', 320)->unique();
-            $table->string('ssid', 11)->unique();
+            $table->string('ssid', 7)->unique();
             $table->string('pec', 320)->unique();
             $table->string('partita_iva', 11)->unique();
             

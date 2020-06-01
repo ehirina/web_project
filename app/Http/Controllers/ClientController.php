@@ -37,7 +37,6 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request->all();
         $input = $request->all();
 
         $validator = Validator::make($input, [
@@ -45,7 +44,7 @@ class ClientController extends Controller
             'nome_referente'   => 'max:255',
             'cognome_referente'    => 'max:255',
             'email'      => 'required|email',
-            'ssid'    => 'required|max:100',
+            'ssid'    => 'required|max:7',
             'pec'      => 'required|email',
             'partita_iva'    => 'required|size:11',
         ]);
@@ -82,5 +81,17 @@ class ClientController extends Controller
         $elemento = Client::find($id);
         
         return view('clients.show', compact('elemento'));
+    }
+
+        /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $elemento = Client::find($id);
+        $elemento->delete();
     }
 }

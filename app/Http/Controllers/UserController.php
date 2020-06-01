@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Validator;
 
 use App\Project;
 use App\User;
+use App\Role;
 
 class UserController extends Controller
 {
@@ -28,7 +30,8 @@ class UserController extends Controller
      */
     public function create()
     {
-         return view('users.create');
+        $roles = Role::all();
+        return view('users.create')->withRoles($roles);;
     }
 
     /**
@@ -50,12 +53,12 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
 
-      if ($user->save()) {
-        return redirect()->route('users.show', $user->id);
-      } else {
-        Session::flash('danger', 'Sorry a problem occurred while creating this user.');
-        return redirect()->route('users.create');
+        $user->save();
+
+      if ($request->role) {
+        $user->syncRoles(explode(',', $request->role));
       }
+
     }
 
     /**
@@ -70,45 +73,6 @@ class UserController extends Controller
         return view("users.show")->withUser($user);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $user = User::findOrFail($id);
-        return view("users.edit")->withUser($user);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-            $this->validate($request, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users,email,'.$id
-      ]);
-
-      $user = User::findOrFail($id);
-      $user->name = $request->name;
-      $user->email = $request->email;
-      $user->password = Hash::make($request->password);
-      
-
-      if ($user->save()) {
-        return redirect()->route('users.show', $id);
-      } else {
-        Session::flash('error', 'There was a problem saving the updated user info to the database. Try again later.');
-        return redirect()->route('users.edit', $id);
-      }
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -118,6 +82,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $elemento = User::find($id);
+        $elemento->delete();
     }
 }
