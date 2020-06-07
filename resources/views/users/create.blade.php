@@ -18,8 +18,13 @@
             {!! Form::open(['action' => 'UserController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                 {{csrf_field()}}
                  <div class="form-group">
-                    {{Form::label('name', 'Nome')}}
+                    {{Form::label('name', 'Name')}}
                     {{Form::text('name', '', ['class' => 'form-control'])}}
+                </div>
+
+                <div class="form-group">
+                    {{Form::label('surname', 'Surname')}}
+                    {{Form::text('surname', '', ['class' => 'form-control'])}}
                 </div>
 
                 <div class="form-group">
@@ -36,7 +41,7 @@
                 <div class="form-group">
                 {{Form::label('role', 'Role')}}
                     
-                    <select class="form-control" name="id_cliente">
+                    <select class="form-control" name="role">
                         @foreach ($roles as $role)
                         <option value="{{ $role->id }}">{{ $role->display_name }}</option>
                         @endforeach

@@ -12,8 +12,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <a class="btn btn-secondary" href="{{  URL::action('UserController@edit', $user->id) }}" >Edit</a>
-            <a class="btn btn-danger" href="#" >Cancel</a>
+            <a class="btn btn-secondary" href="{{  URL::action('UserController@destroy', $user->id) }}" >Delete</a>
         </div>
     </div>
 @endsection

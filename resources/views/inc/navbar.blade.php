@@ -12,12 +12,18 @@
       <li class="nav-item">
         <a class="nav-link" href="/projects">Projects</a>
       </li>
+
+        @auth
+        @if (Auth::user()->hasRole('administrator'))
+         
       <li class="nav-item">
         <a class="nav-link" href="/clients">Clients</a>
       </li>
        <li class="nav-item">
         <a class="nav-link" href="/users">Team</a>
       </li>
+        @endif
+        @endauth
        <li class="nav-item">
         <a class="nav-link" href="/reports">Reports</a>
       </li>

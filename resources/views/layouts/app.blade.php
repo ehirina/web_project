@@ -9,6 +9,8 @@
 
     <title>{{ config('app.name', 'DreamTeam') }}</title>
 
+    @php /*<link href="{{ asset('css/app.css') }}" rel="stylesheet">*/ @endphp
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
@@ -21,17 +23,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <body>
     <div id="app">
 
-        @auth
-        @if (Auth::user()->hasRole('administrator'))
             @include('inc.navbar')
-        @else
-            @include('inc.usernav')
-         @endif
-         @endauth
         <div class="container">
             @yield('content')
         </div>
