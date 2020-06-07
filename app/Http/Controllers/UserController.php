@@ -43,22 +43,20 @@ class UserController extends Controller
     public function store(Request $request)
     {
          $this->validate($request, [
-        'name' => 'required|max:255',
+        'name'  => 'required|max:255',
+        'surname'  => 'max:255',
         'email' => 'required|email|unique:users'
       ]);
 
 
         $user = new User();
         $user->name = $request->name;
+        $user->surname = $request->surname;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-
         $user->save();
 
-      if ($request->role) {
-        $user->syncRoles(explode(',', $request->role));
-      }
-
+        $user->attachRole($request->role);
     }
 
     /**
@@ -84,5 +82,7 @@ class UserController extends Controller
     {
         $elemento = User::find($id);
         $elemento->delete();
+
+        return json_encode( ['message' => 'ok'] );
     }
 }

@@ -21,8 +21,7 @@ class ProjectController extends Controller
     {
         if (Auth::user()->hasRole('administrator')){
             $projects = Project::all();
-    }
-        else {
+        }else {
             $user_id = Auth::id();
             $projects = DB::table('projects')
                         ->select('projects.name as name', 'projects.id as id', 'projects.description as description')
@@ -71,11 +70,11 @@ class ProjectController extends Controller
         }
 
         $project = new Project;
-        $project->name = $request->input('name');
+        $project->name        = $request->input('name');
         $project->description = $request->input('description');
-        $project->date_start = $request->input('date_start');
-        $project->date_end = $request->input('date_end');
-        $project->id_cliente = $request->input('id_cliente');
+        $project->date_start  = $request->input('date_start');
+        $project->date_end    = $request->input('date_end');
+        $project->id_cliente  = $request->input('id_cliente');
         $project->save();
 
         return redirect('/');
@@ -90,8 +89,16 @@ class ProjectController extends Controller
     public function show($id)
     {
         $elemento = Project::find($id);
-        
-        return view('projects.show', compact('elemento'));
+        $client = Client::find($elemento->id_cliente);
+        $team = DB::table('users')
+                        ->select('users.name as name', 'users.surname as surname', 'users.id as id')
+                        ->join('assignments', 'users.id', '=', 'assignments.id_user')
+                        ->where('assignments.id_project', '=', $id)->get();
+        $total_time_spent = DB::table('time_entry')
+                        ->where('id_project', '=', $id)
+                        ->sum('ore');
+
+        return view('projects.show', compact('elemento', 'client', 'team', 'total_time_spent'));
     }
 
     /**

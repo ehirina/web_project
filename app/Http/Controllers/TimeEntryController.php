@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Log;
 use Validator;
 use App\Project;
+use App\Report;
 
 class TimeEntryController extends Controller
 {
@@ -15,7 +18,8 @@ class TimeEntryController extends Controller
      */
     public function index()
     {
-        return view('reports.index');
+        $projects = Project::all();
+        return view('reports.index', compact('projects'));
     }
 
     /**
@@ -38,7 +42,31 @@ class TimeEntryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+          $this->validate($request, [
+        'message.note'          => 'max:500',
+        'message.id_project'    => 'required|exists:projects,id',
+        'message.id_user'       => 'required|exists:users,id',
+        'message.ore'           => 'required',
+        'message.date'          => 'date|before:tomorrow'
+      ]);
+
+        // Log::info($request);
+        $report = new Report();
+        $report->id_project = $request->input('message.id_project');
+        $report->id_user    = $request->input('message.id_user');
+        $report->ore        = $request->input('message.ore');
+        $report->note       = $request->input('message.note');
+        $report->date       = $request->input('message.date');
+        $report->save();
+
+        $response  = array(
+          'status' => 'success',
+          'msg'    => $request->note,
+      );
+       // return redirect('/');
+      //return response()->json($response);
+
+        return json_encode( ['message' => 'ok'] );
     }
 
     /**
