@@ -26,8 +26,8 @@ class CreateAssignmentsTable extends Migration
         });
 
         Schema::table('assignments', function (Blueprint $table)  {
-            $table->foreign('id_project')->references('id')->on('projects');
-            $table->foreign('id_user')->references('id')->on('users');
+            $table->foreign('id_project')->references('id')->on('projects')->onDelete('cascade');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
     });
     }
 

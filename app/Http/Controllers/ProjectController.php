@@ -169,17 +169,6 @@ class ProjectController extends Controller
         return view('projects.usershow', compact('elemento', 'reports', 'ore_totale'));     
       
     }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-    //  */
-    // public function update(Request $request, $id)
-    // {
-    //     //
-    // }
 
     /**
      * Remove the specified resource from storage.
