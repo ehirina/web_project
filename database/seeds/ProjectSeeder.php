@@ -16,34 +16,34 @@ class ProjectSeeder extends Seeder
     {
         DB::table('projects')->insert([
         	[
-        		'id' => '1',
-        		'name' => 'Project 404',
+        		'id'          => '1',
+        		'name'        => 'Project 404',
         		'description' => 'Company sticker board',
-        		'id_cliente' => '1',
-        		'date_start' => Carbon::tomorrow()->format('Y-m-d'),
-        		'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+        		'id_cliente'  => '1',
+        		'date_start'  => Carbon::yesterday()->format('Y-m-d'),
+        		'created_at'  => Carbon::now()->format('Y-m-d H:i:s')
         	],[
-        		'id' => '2',
-        		'name' => 'Titan',
+        		'id'          => '2',
+        		'name'        => 'Titan',
         		'description' => 'Time management system',
-        		'id_cliente' => '2',
-        		'date_start' => Carbon::tomorrow()->format('Y-m-d'),
-        		'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+        		'id_cliente'  => '2',
+        		'date_start'  => Carbon::yesterday()->format('Y-m-d'),
+        		'created_at'  => Carbon::now()->format('Y-m-d H:i:s')
         	],
         	[
-        		'id' => '3',
-        		'name' => 'Apollo',
+        		'id'          => '3',
+        		'name'        => 'Apollo',
         		'description' => 'Internet bot',
-        		'id_cliente' => '2',
-        		'date_start' => Carbon::tomorrow()->format('Y-m-d'),
-        		'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+        		'id_cliente'  => '2',
+        		'date_start'  => Carbon::yesterday()->format('Y-m-d'),
+        		'created_at'  => Carbon::now()->format('Y-m-d H:i:s')
         	],[
-        		'id' => '4',
-        		'name' => 'Cristine',
+        		'id'          => '4',
+        		'name'        => 'Cristine',
         		'description' => 'Educational software',
-        		'id_cliente' => '3',
-        		'date_start' => Carbon::tomorrow()->format('Y-m-d'),
-        		'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+        		'id_cliente'  => '3',
+        		'date_start'  => Carbon::yesterday()->format('Y-m-d'),
+        		'created_at'  => Carbon::now()->format('Y-m-d H:i:s')
         	]
         ]);
     }

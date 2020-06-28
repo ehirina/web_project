@@ -46,8 +46,9 @@ class AssignmentController extends Controller
         $input = $request->all();
 
         $validator = Validator::make($input, [
-            'internal_rate'   => 'numeric',
+            'internal_rate'   => 'required|numeric',
             'external_rate'   => 'numeric',
+            'position'        => 'required|max:100',
             'date_start'      => 'required|date|after:yesterday',
             'date_end'        => 'date|after:date_start|nullable',
             'id_project'      => 'required|exists:projects,id',
@@ -63,13 +64,14 @@ class AssignmentController extends Controller
         $assignment = new Assignment;
         $assignment->internal_rate = $request->input('internal_rate');
         $assignment->external_rate = $request->input('external_rate');
+        $assignment->position      = $request->input('position');
         $assignment->date_start    = $request->input('date_start');
         $assignment->date_end      = $request->input('date_end');
         $assignment->id_project    = $request->input('id_project');
         $assignment->id_user       = $request->input('id_user');
         $assignment->save();
 
-        return redirect('/projects');
+        return redirect('/allprojects');
     }
 
     /**

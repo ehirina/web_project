@@ -37,14 +37,19 @@
                     </select>
                 </div> 
 
+                 <div class="form-group">
+                    {{Form::label('position', 'Position')}}
+                    {{Form::text('position', '', ['class' => 'form-control'])}}
+                </div>
+
                 <div class="form-group">
                     {{Form::label('internal_rate', 'Internal rate')}}
-                    {{Form::number('internal_rate', '', ['class' => 'form-control', 'step' => '0.5' ])}}
+                    {{Form::number('internal_rate', '', ['class' => 'form-control', 'step' => '0.5','min'=> '0'])}}
                 </div>   
 
                    <div class="form-group">
                     {{Form::label('external_rate', 'External rate')}}
-                    {{Form::number('external_rate', '', ['class' => 'form-control', 'step' => '0.5' ])}}
+                    {{Form::number('external_rate', '', ['class' => 'form-control', 'step' => '0.5', 'min'=> '0' ])}}
                 </div> 
 
                     <div class="form-group">

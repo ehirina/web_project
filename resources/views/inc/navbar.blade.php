@@ -5,28 +5,33 @@
             <span class="navbar-toggler-icon"></span>
         </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      @auth
         <ul class="navbar-nav">
         <li class="nav-item">
         <a class="nav-link" href="/home">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/projects">Projects</a>
+        <a class="nav-link" href="/projects">My Projects</a>
       </li>
 
-        @auth
+        
         @if (Auth::user()->hasRole('administrator'))
-         
+        <li class="nav-item">
+        <a class="nav-link" href="/allprojects">All Projects</a>
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="/clients">Clients</a>
       </li>
        <li class="nav-item">
         <a class="nav-link" href="/users">Team</a>
       </li>
-        @endif
-        @endauth
-       <li class="nav-item">
-        <a class="nav-link" href="/reports">Reports</a>
       </li>
+        @endif
+        
+       <li class="nav-item">
+        <a class="nav-link" href="/reports">My Reports</a>
+      </li>
+      @endauth
     </ul>
     </div>
 

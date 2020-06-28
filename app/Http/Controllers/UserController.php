@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 
+
+use Carbon\Carbon;
 use App\Project;
 use App\User;
 use App\Role;
@@ -57,6 +59,8 @@ class UserController extends Controller
         $user->save();
 
         $user->attachRole($request->role);
+
+        return redirect('/users');
     }
 
     /**
@@ -83,6 +87,6 @@ class UserController extends Controller
         $elemento = User::find($id);
         $elemento->delete();
 
-        return json_encode( ['message' => 'ok'] );
+         return redirect('/users');
     }
 }

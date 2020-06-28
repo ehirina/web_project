@@ -7,13 +7,15 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-	<p class="h3">Reports</p>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
-
+ <div class="flex-container">
+ <div class="columns m-t-10">
+   <div class="column">
+	<h1 class="title">Reports</h1>
+</div>
+	 <div class="column">
+          <a href="{{route('projects.create')}}" class="button is-primary is-pulled-right"  data-toggle="modal" data-target="#exampleModal"><i class="fa fa-user-plus m-r-10"></i> Add New Report</a>
+        </div>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -60,6 +62,77 @@
   </div>
 </div>
 
+        <hr class="m-t-0">
+<h5>Info for period from {{$from}} to {{$to}}</b> </h5>
+        <hr class="m-t-0">
+
+        <div class="card">
+        <div class="card-content">
+          <table class="table is-narrow">
+            <thead>
+              <tr>
+                <th>Project name</th>
+                <th>Position</th>
+                <th>Work description</th>
+                <th>Date</th>
+                <th>Hours</th>
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              
+                @foreach ($reports as $report)
+                <tr>
+                  <td><a class="button is-outlined" href="{{route('projects.show', $report->project_id)}}">{{$report->project_name}}</a></td>
+                  <td>{{$report->position}}</td>
+                  <td>{{$report->note}}</td>
+                  <td>{{$report->date}}</td>
+                  <td>{{$report->hours}}</a></td>
+                  <td> 
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                   <form
+                                action="{{ route('reports.destroy', $report->id) }}"
+                                method="POST"
+                    >
+                      <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    {{ method_field('DELETE') }}
+                      {{ csrf_field()}}
+                    </form>
+                    <form
+                                action="{{ route('reports.edit', $report->id) }}"
+                                method="GET"
+                    >
+                      <button type="submit" class="btn btn-primary  btn-sm">Update</button>
+                    </form>
+                  </div>
+                  </td>
+                     
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+    </div>
+    <hr class="m-t-0">
+<h5> Change period: </h5>
+ <form
+    action="{{ route('reports-bydate.index') }}"
+    method="GET"
+                    >
+              <div class="form-group">
+                     {{Form::label('date_from', 'Start')}}
+                    {{Form::date('date_from', '', ['class' => 'form-control'])}}
+                </div>
+                <div class="form-group">
+                     {{Form::label('date_to', 'End')}}
+                    {{Form::date('date_to', '', ['class' => 'form-control'])}}
+                </div>   
+                <button type="submit" class="btn btn-primary">Save</button>
+ </form>
+        
+
+
 <script type="text/javascript">
 $.ajaxSetup({
     headers: {
@@ -91,14 +164,17 @@ $.ajaxSetup({
                 	'message': Jdata,
                 	'_token': $('meta[name="csrf-token"]').attr('content')},
                 success: function(response) {
+                	$("#exampleModal").modal("hide");
                     console.log(response);
                 }, 
                 error: function(response, stato) {
+                	alert("Data is incorrect, please try again.");
                     console.log(response);
                 }
             });
 
         });
+
     });
 </script>
 @endsection

@@ -2,7 +2,7 @@
 
 @section('content')
 
-<p class="h3">Your projects</p>
+<h1 class="title">Your projects</h1>
 <br />
 <div class="row">
     <div class="col-md-12">
@@ -17,7 +17,7 @@
                 <tbody>
                     @foreach ($projects as $project)
                     <tr>
-                        <td>{{ $project->name }}</td>
+                        <td><a class="button is-outlined" href="{{  URL::action('ProjectController@show_user_info', $project->id) }}">{{$project->name}}</a></td>
                         <td>{{ $project->description }}</td>
                     </tr>
                     @endforeach

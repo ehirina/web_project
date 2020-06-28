@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">Your personal report in {{ Carbon\Carbon::now()->format('F')}}:</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,7 +14,17 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <table class="table is-narrow">
+                    <thead>
+                    <tr>
+                    <th>Total hours</th>
+                    <th>Invoiced sum</th>
+                </tr>
+                
+                    <tr>
+                        <td>{{ $total_hours }}</td>
+                        <td>{{ $total_sum . '  €'}}</td>
+                    </tr>
                 </div>
             </div>
         </div>

@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Validator;
+
+use Carbon\Carbon;
 use App\Client;
+use App\Project;
 
 class ClientController extends Controller
 {
@@ -50,7 +54,7 @@ class ClientController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return redirect('client/create')
+                return redirect('clients/create')
                 ->withErrors($validator)
                 ->withInput();
             }
@@ -67,7 +71,7 @@ class ClientController extends Controller
 
         //Client::create($input);
 
-            return redirect('/');
+            return redirect('/clients');
         }
 
         /**
@@ -78,10 +82,66 @@ class ClientController extends Controller
      */
         public function show($id)
         {
-            $elemento = Client::find($id);
+            $date_from = new Carbon('first day of this month');
+            $date_to   = new Carbon('last day of this month');
+        
 
-            return view('clients.show', compact('elemento'));
+            $elemento = Client::find($id);
+            $projects = DB::table('projects')
+                    ->select('projects.name as name', 'projects.id as id')
+                    ->where('id_cliente', '=', $id)
+                    ->get();
+
+            $total_time_spent = DB::table('reports')
+                    ->join('projects', 'reports.id_project', '=', 'projects.id')
+                    ->where('projects.id_cliente', '=', $id)->whereBetween('date', array($date_from, $date_to))
+                    ->sum('ore');
+             $expenses = DB::table('reports')
+                    ->join('projects', 'reports.id_project', '=', 'projects.id')
+                    ->join('assignments', 'reports.id_assignment', '=', 'assignments.id')
+                    ->where('projects.id_cliente', '=', $id)->whereBetween('date', array($date_from, $date_to))
+                     ->sum(\DB::raw('assignments.internal_rate * ore'));
+             $income = DB::table('reports')
+                    ->join('projects', 'reports.id_project', '=', 'projects.id')
+                    ->join('assignments', 'reports.id_assignment', '=', 'assignments.id')
+                    ->where('projects.id_cliente', '=', $id)->whereBetween('date', array($date_from, $date_to))
+                     ->sum(\DB::raw('assignments.external_rate * ore'));
+                     
+
+            return view('clients.show', compact('elemento', 'projects', 'total_time_spent', 'income', 'expenses'));
         }
+
+        public function show_detailed_info(Request $request){
+        $msg  = $request->query('message');
+        $date_from = $msg['date_from'];
+        $date_to    = $msg['date_to'];
+        $client_id = $msg['client_id'];
+
+       
+        $total_time_spent = DB::table('reports')
+                    ->join('projects', 'reports.id_project', '=', 'projects.id')
+                    ->where('projects.id_cliente', '=', $client_id)->whereBetween('date', array($date_from, $date_to))
+                    ->sum('ore');
+        $total_personell_expenses = DB::table('reports')
+                    ->join('projects', 'reports.id_project', '=', 'projects.id')
+                    ->join('assignments', 'reports.id_assignment', '=', 'assignments.id')
+                    ->where('projects.id_cliente', '=', $client_id)->whereBetween('date', array($date_from, $date_to))
+                     ->sum(\DB::raw('assignments.internal_rate * ore'));
+        $total_personell_profit = DB::table('reports')
+                    ->join('projects', 'reports.id_project', '=', 'projects.id')
+                    ->join('assignments', 'reports.id_assignment', '=', 'assignments.id')
+                    ->where('projects.id_cliente', '=', $client_id)->whereBetween('date', array($date_from, $date_to))
+                     ->sum(\DB::raw('assignments.external_rate * ore'));
+
+        $to = new Carbon($date_to);
+        $to = $to->format('d F Y');
+        $from = new Carbon($date_from);
+        $from = $from->format('d F Y');
+        
+
+     return response()->json(array('total_time_spent'=> $total_time_spent, 'date_from' => $from, 'date_to' => $to, 'income' => $total_personell_profit, 'expenses' => $total_personell_expenses), 200);
+        
+    }
 
         /**
      * Remove the specified resource from storage.
@@ -93,5 +153,7 @@ class ClientController extends Controller
         {
             $elemento = Client::find($id);
             $elemento->delete();
+
+            return redirect('/clients');
         }
     }

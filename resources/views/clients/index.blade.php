@@ -23,6 +23,7 @@
                 <th>Company</th>
                 <th>Contact person</th>
                 <th>Email</th>
+                <th></th>
               </tr>
             </thead>
 
@@ -33,6 +34,10 @@
                   <td><a class="button is-outlined" href="{{route('clients.show', $client->id)}}">{{$client->ragione_sociale}}</a></td>
                   <td>{{$client->nome_referente}} {{$client->cognome_referente}}</td>
                   <td>{{$client->email}}</td>
+
+              <td>{{ Form::open(['method' => 'DELETE', 'route' => ['clients.destroy', $client->id]]) }}
+                  <button type="submit" class="btn btn-danger btn-xs">Delete</button>
+                  {{ Form::close() }}</td>
               </tr>
               @endforeach
             </tbody>

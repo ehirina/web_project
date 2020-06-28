@@ -17,6 +17,7 @@ class CreateAssignmentsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('id_project')->unsigned();
             $table->bigInteger('id_user')->unsigned();
+            $table->string('position');
             $table->decimal('internal_rate', 5, 2);
             $table->decimal('external_rate', 5, 2);
             $table->date('date_start');
@@ -25,7 +26,7 @@ class CreateAssignmentsTable extends Migration
         });
 
         Schema::table('assignments', function (Blueprint $table)  {
-            $table->foreign('id_project')->references('id')->on('projects')->onDelete('CASCADE');
+            $table->foreign('id_project')->references('id')->on('projects');
             $table->foreign('id_user')->references('id')->on('users');
     });
     }

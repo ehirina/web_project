@@ -33,7 +33,9 @@
                   <td>{{$user->name}}</td>
                   <td>{{$user->email}}</td>
                   <td>{{$user->created_at->toFormattedDateString()}}</td>
-                  <td><a class="button is-outlined" href="{{route('users.destroy', $user->id)}}">Delete</a></td>
+                  <td>{{ Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id]]) }}
+                  <button type="submit" class="btn btn-danger btn-xs">Delete</button>
+                  {{ Form::close() }}</td>
                   <td> @foreach ($user->roles as $role)
                        {{ $role->display_name }}
                         @endforeach</td>
