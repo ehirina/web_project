@@ -25,9 +25,10 @@ class ReportController extends Controller
     { 
         $user_id = Auth::id();
         $projects = DB::table('projects')
-                    ->select('projects.name as name', 'projects.id as id', 'projects.description as description')
+                    ->select('projects.name as name', 'projects.id as id')
                     ->join('assignments', 'projects.id', '=', 'assignments.id_project')
-                    ->where('assignments.id_user', '=', $user_id)->get();
+                    ->where('assignments.id_user', '=', $user_id)
+                    ->distinct()->get();
 
         $reports = DB::table('reports')
                     ->select('reports.id as id', 'assignments.position as position', 
@@ -65,7 +66,7 @@ class ReportController extends Controller
         'message.note'          => 'max:500',
         'message.id_project'    => 'required|exists:projects,id',
         'message.id_user'       => 'required|exists:users,id',
-        'message.ore'           => 'required',
+        'message.ore'           => 'required|numeric',
         'message.date'          => 'date|before:tomorrow'
       ]);
 
@@ -98,7 +99,14 @@ class ReportController extends Controller
         $date_to_def   = new Carbon('last day of this month');
        
         $date_from = $request->query('date_from', $date_from_def);
+        if ($date_from == ''){
+            $date_from = $date_from_def;
+        }
         $date_to   = $request->query('date_to', $date_to_def);
+        if ($date_to == ''){
+            $date_to = $date_to_def;
+        }
+
         $user_id = Auth::id();
         $projects = DB::table('projects')
                     ->select('projects.name as name', 'projects.id as id', 'projects.description as description')

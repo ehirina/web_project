@@ -17,7 +17,6 @@
           <table class="table is-narrow">
             <thead>
               <tr>
-                <th>id</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Date Created</th>
@@ -29,7 +28,6 @@
             <tbody>
               @foreach ($users as $user)
                 <tr>
-                  <th>{{$user->id}}</th>
                   <td>{{$user->name}}</td>
                   <td>{{$user->email}}</td>
                   <td>{{$user->created_at->toFormattedDateString()}}</td>

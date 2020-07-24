@@ -6,8 +6,10 @@
 <br />
 <div class="row">
     <div class="col-md-12">
-            @if (count($projects) > 0)
-            <table class="table">
+        @if (count($projects) > 0)
+        <div class="card">
+        <div class="card-content">
+            <table class="table table-bordered ">
                 <thead>
                     <tr>
                         <th scope="col">Project Title</th>
@@ -23,6 +25,8 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+    </div>
             @else 
                 <p>There are not projects yet :)</p>
             @endif

@@ -17,7 +17,7 @@
 
 	    <div class="card">
         <div class="card-content">
-          <table class="table is-narrow">
+          <table class="table is-narrow ">
             <thead>
               <tr>
                 <th>Project name</th>

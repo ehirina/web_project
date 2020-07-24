@@ -19,8 +19,7 @@
           <table class="table is-narrow">
             <thead>
               <tr>
-                <th>id</th>
-                <th>Company</th>
+                <th>Company name</th>
                 <th>Contact person</th>
                 <th>Email</th>
                 <th></th>
@@ -30,7 +29,6 @@
             <tbody>
               @foreach ($clients as $client)
                 <tr>
-                  <th>{{$client->id}}</th>
                   <td><a class="button is-outlined" href="{{route('clients.show', $client->id)}}">{{$client->ragione_sociale}}</a></td>
                   <td>{{$client->nome_referente}} {{$client->cognome_referente}}</td>
                   <td>{{$client->email}}</td>

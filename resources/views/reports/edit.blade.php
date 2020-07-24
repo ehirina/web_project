@@ -34,7 +34,7 @@
 
                 <div class="form-group">
                     {{Form::label('ore', 'Time spent (hours)')}}
-                    <input type="number" class="form-control" name="ore" value="{{ old('ore', $report->ore) }}">
+                    <input type="number" class="form-control" step="any" name="ore" value="{{ old('ore', $report->ore) }}">
                 </div>
                 <div class="form-group">
                     {{Form::label('date', 'Date')}}

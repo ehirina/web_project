@@ -85,5 +85,7 @@ class AssignmentController extends Controller
     {
         $elemento = Assignment::find($id);
         $elemento->delete();
+        return redirect('/allprojects');
+
     }
 }

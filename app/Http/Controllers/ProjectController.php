@@ -25,7 +25,9 @@ class ProjectController extends Controller
         $projects = DB::table('projects')
                     ->select('projects.name as name', 'projects.id as id', 'projects.description as description')
                     ->join('assignments', 'projects.id', '=', 'assignments.id_project')
-                    ->where('assignments.id_user', '=', $user_id)->get();
+                    ->where('assignments.id_user', '=', $user_id)
+                    ->distinct()->get();
+
 
         return view('projects.index', compact('projects'));
     }
@@ -35,7 +37,8 @@ class ProjectController extends Controller
     {
         $projects = DB::table('projects')
                     ->select('projects.name as name', 'projects.id as id', 'projects.description as description', 'clients.ragione_sociale as client', 'clients.id as client_id' )
-                    ->join('clients', 'projects.id_cliente', '=', 'clients.id')->get();
+                    ->join('clients', 'projects.id_cliente', '=', 'clients.id')
+                    ->distinct()->get();
         return view('projects.adminIndex', compact('projects'));
     }
 
@@ -102,7 +105,7 @@ class ProjectController extends Controller
         $elemento = Project::find($id);
         $client = Client::find($elemento->id_cliente);
         $team = DB::table('users')
-                        ->select('users.name as name', 'users.surname as surname', 'users.id as id', 'assignments.position as position')
+                        ->select('users.name as name', 'users.surname as surname', 'users.id as id', 'assignments.position as position', 'assignments.id as assignment_id')
                         ->join('assignments', 'users.id', '=', 'assignments.id_user')
                         ->where('assignments.id_project', '=', $id)->get();
         $total_time_spent = DB::table('reports')

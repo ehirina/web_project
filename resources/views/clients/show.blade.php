@@ -41,7 +41,7 @@
                 <th> 
                     @foreach ($projects as $project)
                       <a class="button is-outlined" href="{{  URL::action('ProjectController@show', $project->id) }}">
-                         {{$project->name}}</a>
+                         {{$project->name}}</a> <br>
                     @endforeach
                     </th>
               </tr>

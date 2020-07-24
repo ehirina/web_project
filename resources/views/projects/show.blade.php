@@ -33,8 +33,15 @@
                 <th>Team</th>
                 <th> 
                     @foreach ($team as $team_member)
-                      <a class="button is-outlined" href="{{  URL::action('UserController@show', $team_member->id) }}">
-                         {{$team_member->name}} {{$team_member->surname}} as {{$team_member->position}}</a>
+                         {{$team_member->name}} {{$team_member->surname}} as {{$team_member->position}} 
+                                <form
+                                action="{{ route('assignments.destroy', $team_member->assignment_id) }}"
+                                method="POST"
+                                >
+                      <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    {{ method_field('DELETE') }}
+                      {{ csrf_field()}}
+                    </form>
                     @endforeach
                     </th>
               </tr>

@@ -165,6 +165,7 @@ $.ajaxSetup({
                 	'_token': $('meta[name="csrf-token"]').attr('content')},
                 success: function(response) {
                 	$("#exampleModal").modal("hide");
+                  location.reload();
                     console.log(response);
                 }, 
                 error: function(response, stato) {
