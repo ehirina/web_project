@@ -17,12 +17,15 @@ class CreateProjectsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->text('description');
-            $table->bigIncrements('id_cliente');
-            $table->foreign('id_cliente')->referenced('id')->on('clients')->onDelete('cascade');;
+            $table->bigInteger('id_cliente')->unsigned();
             $table->date('date_start');
-            $table->date('date_end');
+            $table->date('date_end')->nullable();
             $table->timestamps();
         });
+
+        Schema::table('projects', function (Blueprint $table)  {
+         $table->foreign('id_cliente')->references('id')->on('clients')->onDelete('cascade');
+    });
     }
 
     /**

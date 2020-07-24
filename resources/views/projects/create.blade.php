@@ -1,6 +1,9 @@
+@extends ('layouts.app')
+
+@section('content')
     <div class="row">
         <div class="col-md-6">
-            <h1>Inserisci un nuovo progetto</h1>
+            <p class="h3">New project?</p>
 
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -14,28 +17,33 @@
 
             {!! Form::open(['action' => 'ProjectController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                 <div class="form-group">
-                    {{Form::label('title', 'Title')}}
-                    {{Form::text('title', '', ['class' => 'form-control', 'placeholder' => 'Title'])}}
+                    {{Form::label('name', 'Title')}}
+                    {{Form::text('name', '', ['class' => 'form-control'])}}
                 </div>
                 <div class="form-group">
                     {{Form::label('description', 'Description')}}
-                    {{Form::textarea('description', '', ['class' => 'form-control', 'placeholder' => 'Description'])}}
+                    {{Form::textarea('description', '', ['class' => 'form-control', ])}}
                 </div>
                 <div class="form-group">
-                     {{Form::label('date_start', 'Start from')}}
+                     {{Form::label('date_start', 'Start')}}
                     {{Form::date('date_start', '', ['class' => 'form-control'])}}
                 </div>
                 <div class="form-group">
                      {{Form::label('date_end', 'End')}}
                     {{Form::date('date_end', '', ['class' => 'form-control'])}}
-                </div>
-                <div class="form-group">
-                    <label for="description">Descrizione</label>
-                    <input class="form-control" type="text" name="description" />
-                </div>
+                </div>   
 
-                <input class="btn btn-primary" type="submit" value="Crea">
+                <div class="form-group">
+                    {{Form::label('id_cliente', 'Client')}}
+                    
+                    <select class="form-control" name="id_cliente">
+                        @foreach ($clients as $client)
+                        <option value="{{ $client->id }}">{{ $client->ragione_sociale }}</option>
+                        @endforeach
+                    </select>
+                </div>     
          {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
         {!! Form::close() !!}
         </div>
     </div>
+@endsection
